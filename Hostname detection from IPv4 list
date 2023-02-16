@@ -1,0 +1,18 @@
+# Specify the list of IP addresses
+$ipAddresses = @('IPv4', 'IPv4S', 'IPv4T')
+
+foreach ($ipAddress in $ipAddresses) {
+    try {
+
+        $hostname = [System.Net.Dns]::GetHostEntry($ipAddress).HostName
+        
+        Write-Output "IP address: $ipAddress"
+        Write-Output "Hostname: $hostname"
+        Write-Output ""
+    }
+    catch {
+        
+        Write-Output "Error: $ipAddress could not be resolved to a hostname"
+        Write-Output ""
+    }
+}
