@@ -1,0 +1,11 @@
+# Define the list of devices to check
+$devices = "Device1", "Device2", "Device3"
+
+foreach ($device in $devices) {
+    $service = Get-Service -ComputerName $device -Name "Citrix Licensing Support Service"
+    if ($service.Status -eq "Running") {
+        Write-Host "The Citrix Licensing Support Service is running on $device"
+    } else {
+        Write-Host "The Citrix Licensing Support Service is not running on $device"
+    }
+}
