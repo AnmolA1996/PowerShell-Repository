@@ -1,0 +1,22 @@
+# Define the list of devices to check
+$devices = "Device1", "Device2", "Device3"
+
+$eventIds = 1051, 1052
+
+foreach ($device in $devices) {
+    Write-Host "Checking event log status on $device"
+    foreach ($eventId in $eventIds) {
+        $eventLog = Get-WinEvent -ComputerName $device -FilterHashtable @{
+            LogName='Application'
+            ID=$eventId
+            Level=2
+            StartTime=(Get-Date).AddDays(-1)
+        } -MaxEvents 1
+        if ($eventLog) {
+            Write-Host "Event log found on $device for event ID $eventId:"
+            Write-Host $eventLog.Message
+        } else {
+            Write-Host "No event log found on $device for event ID $eventId"
+        }
+    }
+}
